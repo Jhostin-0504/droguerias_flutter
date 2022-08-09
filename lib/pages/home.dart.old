@@ -1,0 +1,208 @@
+import 'dart:math';
+
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:soluapp/helpers/dialog_confirm.dart';
+import 'package:soluapp/services/auth_services.dart';
+import 'package:pluto_grid/pluto_grid.dart';
+
+class HomePage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    //FactCheckOutlined
+
+    //final DataTableSource _data = MyData();
+    return DefaultTabController(
+      initialIndex: 0,
+      length: 4,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Row(
+            children: <Widget>[
+              IconButton(
+                icon: Icon(
+                  Icons.exit_to_app,
+                  color: Colors.black87,
+                ),
+                onPressed: () async {
+                  dialogConfirmacion(context, "CERRAR SESIÓN",
+                      "Confirma el cierre se sesión?");
+                },
+              ),
+              Text('Bitácora')
+            ],
+          ),
+          bottom: TabBar(
+            tabs: <Widget>[
+              Tab(
+                icon: Icon(Icons.cloud_outlined),
+              ),
+              Tab(
+                icon: Icon(Icons.beach_access_sharp),
+              ),
+              Tab(
+                icon: Icon(Icons.brightness_5_sharp),
+              ),
+              Tab(
+                icon: Icon(Icons.brightness_5_sharp),
+              )
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: <Widget>[
+            Center(child: PlutoGridExamplePage()),
+            Center(
+              child: Text("It's rainy here"),
+            ),
+            Center(
+              child: Text("It's sunny here"),
+            ),
+            Center(
+              child: Text("It's sunny here"),
+            )
+          ],
+        ),
+      ),
+    );
+
+    /*return Scaffold(
+      appBar: AppBar(
+          title: Text(
+            "Mi nombre",
+            style: TextStyle(color: Colors.black87),
+          ),
+          elevation: 1,
+          backgroundColor: Colors.white,
+          leading: IconButton(
+            icon: Icon(
+              Icons.exit_to_app,
+              color: Colors.black87,
+            ),
+            onPressed: () async {
+              final authService =
+                  Provider.of<AuthService>(context, listen: false);
+              bool? autenticado = null;
+              autenticado = await authService.getSolicitudes(262);
+              dialogConfirmacion(
+                  context, "CERRAR SESIÓN", "Confirma el cierre se sesión?");
+            },
+          ),
+          actions: []),
+      body: Center(
+        child: Text('Hola Mundo'),
+      ),
+    );*/
+  }
+}
+
+/// PlutoGrid Example
+//
+/// For more examples, go to the demo web link on the github below.
+class PlutoGridExamplePage extends StatefulWidget {
+  const PlutoGridExamplePage({Key? key}) : super(key: key);
+
+  @override
+  State<PlutoGridExamplePage> createState() => _PlutoGridExamplePageState();
+}
+
+class _PlutoGridExamplePageState extends State<PlutoGridExamplePage> {
+  final List<PlutoColumn> columns = <PlutoColumn>[
+    PlutoColumn(
+      title: '#',
+      field: 'count',
+      type: PlutoColumnType.text(),
+      width: 70,
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'RQ',
+      field: 'rq',
+      type: PlutoColumnType.number(),
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'FECHA',
+      field: 'fecha',
+      type: PlutoColumnType.date(),
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'HORA',
+      field: 'hora',
+      type: PlutoColumnType.text(),
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'MORA',
+      field: 'mora',
+      type: PlutoColumnType.text(),
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'ASUNTO',
+      field: 'asunto',
+      type: PlutoColumnType.text(),
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+    PlutoColumn(
+      title: 'OBSERVACIONES',
+      field: 'observaciones',
+      type: PlutoColumnType.text(),
+      enableContextMenu: false,
+      cellPadding: 0,
+      enableAutoEditing: false,
+      enableEditingMode: false,
+    ),
+  ];
+
+  final List<PlutoRow> rows = [
+    PlutoRow(
+      cells: {
+        'count': PlutoCell(value: 1),
+        'rq': PlutoCell(value: 'RQ324'),
+        'fecha': PlutoCell(value: '2020-08-06'),
+        'hora': PlutoCell(value: '6:57'),
+        'mora': PlutoCell(value: 'item1'),
+        'asunto': PlutoCell(value: 'item1'),
+        'observaciones': PlutoCell(value: 'item1'),
+      },
+    ),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Container(
+        padding: const EdgeInsets.all(15),
+        child: PlutoGrid(
+            columns: columns,
+            rows: rows,
+            configuration: PlutoGridConfiguration(
+              enableColumnBorder: true,
+              activatedBorderColor: Colors.grey,
+              gridBorderColor: Colors.grey,
+              borderColor: Colors.grey,
+            )),
+      ),
+    );
+  }
+}
