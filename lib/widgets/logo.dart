@@ -17,17 +17,17 @@ class Logo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Center(
       child: Container(
-        margin: EdgeInsets.only(top: 50),
+        margin: const EdgeInsets.only(top: 50),
         width: this.ancho,
         child: Column(
           children: <Widget>[
             Image(image: AssetImage(this.pathImage)),
-            SizedBox(
+            const SizedBox(
               height: 10,
             ),
             Text(
               this.label,
-              style: TextStyle(fontSize: 14),
+              style: const TextStyle(fontSize: 14),
             )
           ],
         ),

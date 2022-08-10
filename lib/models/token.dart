@@ -1,49 +1,42 @@
 import 'dart:convert';
 
 Token tokenFromJson(String str) => Token.fromJson(json.decode(str));
-
 String tokenToJson(Token data) => json.encode(data.toJson());
 
 class Token {
   Token({
-    required this.success,
+    required this.currentUser,
+    required this.csrfToken,
+    required this.logoutToken,
   });
-
-  Success success;
-
+  CurrentUser currentUser;
+  String csrfToken;
+  String logoutToken;
   factory Token.fromJson(Map<String, dynamic> json) => Token(
-        success: Success.fromJson(json["success"]),
+        currentUser: CurrentUser.fromJson(json["current_user"]),
+        csrfToken: json["csrf_token"],
+        logoutToken: json["logout_token"],
       );
-
   Map<String, dynamic> toJson() => {
-        "success": success.toJson(),
+        "current_user": currentUser.toJson(),
+        "csrf_token": csrfToken,
+        "logout_token": logoutToken,
       };
 }
 
-class Success {
-  Success({
-    required this.code,
-    required this.token,
-    required this.entity,
-    required this.message,
+class CurrentUser {
+  CurrentUser({
+    required this.uid,
+    required this.name,
   });
-
-  int code;
-  String token;
-  dynamic entity;
-  String message;
-
-  factory Success.fromJson(Map<String, dynamic> json) => Success(
-        code: json["code"],
-        token: json["token"],
-        entity: json["entity"],
-        message: json["message"],
+  String uid;
+  String name;
+  factory CurrentUser.fromJson(Map<String, dynamic> json) => CurrentUser(
+        uid: json["uid"],
+        name: json["name"],
       );
-
   Map<String, dynamic> toJson() => {
-        "code": code,
-        "token": token,
-        "entity": entity,
-        "message": message,
+        "uid": uid,
+        "name": name,
       };
 }

@@ -16,14 +16,29 @@ class SideMenu extends StatelessWidget {
           _DrawerHeader(),
           ListTile(
             leading: const Icon(Icons.padding_outlined),
-            title: const Text('Home'),
+            title: const Text('Inicio'),
             onTap: () {},
           ),
           ListTile(
             leading: const Icon(Icons.settings_outlined),
-            title: const Text('Settings'),
+            title: const Text('Asocoldro lo escucha'),
             onTap: () {
               //Navigator.pushNamed(context, HomePage.roteName)
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.settings_outlined),
+            title: const Text('Eventos y capacitaciones'),
+            onTap: () {
+              //Navigator.pushNamed(context, HomePage.roteName)
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.logout_outlined),
+            title: const Text('Iniciar Sesión'),
+            onTap: () {
+              dialogConfirmacion(
+                  context, "CERRAR SESIÓN", "Confirma el cierre se sesión?");
             },
           ),
           ListTile(
@@ -42,6 +57,7 @@ class SideMenu extends StatelessWidget {
   DrawerHeader _DrawerHeader() {
     return DrawerHeader(
       child: Container(),
+      margin: EdgeInsets.only(top: 0),
       decoration: const BoxDecoration(
           image: DecorationImage(
               image: AssetImage('assets/menu-img.jpeg'), fit: BoxFit.cover)),

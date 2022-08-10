@@ -33,7 +33,7 @@ class MapsApp extends StatelessWidget {
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: 'loading',
+        initialRoute: 'home',
         routes: appRoutes,
       ),
     );

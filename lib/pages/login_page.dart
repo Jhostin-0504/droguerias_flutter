@@ -4,7 +4,7 @@ import 'package:maps_app/helpers/alert.dart';
 import 'package:maps_app/pages/home.dart';
 import 'package:maps_app/services/auth_services.dart';
 import 'package:maps_app/widgets/logo.dart';
-import '../widgets/custom_input.dart';
+import 'package:maps_app/widgets/custom_input.dart';
 
 class LoginPage extends StatelessWidget {
   @override
@@ -19,9 +19,9 @@ class LoginPage extends StatelessWidget {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: <Widget>[
-              Logo(
-                label: 'Lo hacemos posible',
-                pathImage: 'assets/importsoluciones-logo.png',
+              const Logo(
+                label: 'Manténgase al día!.',
+                pathImage: 'assets/asocoldro-logo.png',
                 ancho: 300,
               ),
               _Form(),
@@ -69,7 +69,7 @@ class __FormState extends State<_Form> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                primary: Colors.orange, // background
+                primary: Color.fromARGB(255, 24, 196, 235), // background
                 onPrimary: Colors.white, // foreground
                 shape: StadiumBorder()),
             onPressed: authService.autenticando
@@ -93,7 +93,7 @@ class __FormState extends State<_Form> {
                   },
             child: Container(
               width: double.infinity,
-              child: Center(
+              child: const Center(
                 child: Text(
                   "Autenticar",
                   style: TextStyle(
@@ -115,9 +115,9 @@ class _Labels extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Column(
-        children: <Widget>[
+        children: const <Widget>[
           Text(
-            'ImporSoluciones @ 2022',
+            'Asocoldro @ 2022',
             style: TextStyle(fontWeight: FontWeight.w300),
           )
         ],

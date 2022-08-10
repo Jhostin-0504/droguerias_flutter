@@ -32,19 +32,25 @@ class AuthService with ChangeNotifier {
 
   Future<bool> login(String login, String password) async {
     this.autenticando = true;
-    String url =
-        '${Environment.apiUrl}login?login=${login}&password=${password}';
-    Map<String, String> headers = new HashMap();
-    headers.putIfAbsent('Accept', () => 'application/json');
-    http.Response response = await http.get(
+    final data = {
+      'name': login,
+      'pass': password,
+    };
+    String url = '${Environment.apiUrl}/user/login?_format=json';
+    /*Map<String, String> headers = new HashMap();
+    headers.putIfAbsent('Accept', () => 'application/json');*/
+    http.Response response = await http.post(
       Uri.parse(url),
-      headers: headers,
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
     );
     this.autenticando = false;
     if (response.statusCode == 200) {
       final tokenResponse = tokenFromJson(response.body);
+      final tokenToJsonResp = tokenToJson(tokenResponse);
       //print(tokenResponse.success.token);
-      await this._guardarToken(tokenResponse.success.token);
+      await this._guardarToken(tokenResponse.csrfToken);
+      await this._guardarTokenAuth(tokenToJsonResp);
       return true;
     } else {
       return false;
@@ -52,6 +58,7 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> isLoginIn() async {
+    return false; /*
     final token = await _storage.read(key: 'token');
     String url = '${Environment.apiUrl}solubitacoraapi/usser?token=${token}';
     Map<String, String> headers = new HashMap();
@@ -71,8 +78,9 @@ class AuthService with ChangeNotifier {
     } else {
       this.logout();
       return false;
-    }
+    }*/
   }
+
   /*
   Future<bool> isLoginIn() async {
     final token = await _storage.read(key: 'token');
@@ -92,6 +100,9 @@ class AuthService with ChangeNotifier {
     }
   }
   */
+  Future _guardarTokenAuth(String data) async {
+    return await _storage.write(key: 'dataAuth', value: data);
+  }
 
   Future _guardarToken(String token) async {
     return await _storage.write(key: 'token', value: token);
