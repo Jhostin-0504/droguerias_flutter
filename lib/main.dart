@@ -31,9 +31,12 @@ class MapsApp extends StatelessWidget {
         ChangeNotifierProvider(create: (_) => SolicitudesServices())
       ],
       child: MaterialApp(
+        theme: ThemeData(
+          primarySwatch: Colors.red,
+        ),
         debugShowCheckedModeBanner: false,
         title: 'Material App',
-        initialRoute: 'home',
+        initialRoute: 'loading',
         routes: appRoutes,
       ),
     );

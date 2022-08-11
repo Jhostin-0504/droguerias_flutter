@@ -49,8 +49,7 @@ class AuthService with ChangeNotifier {
       final tokenResponse = tokenFromJson(response.body);
       final tokenToJsonResp = tokenToJson(tokenResponse);
       //print(tokenResponse.success.token);
-      await this._guardarToken(tokenResponse.csrfToken);
-      await this._guardarTokenAuth(tokenToJsonResp);
+      await this._guardarToken(tokenResponse.token);
       return true;
     } else {
       return false;

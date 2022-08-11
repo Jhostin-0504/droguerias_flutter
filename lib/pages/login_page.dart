@@ -21,7 +21,7 @@ class LoginPage extends StatelessWidget {
             children: <Widget>[
               const Logo(
                 label: 'Manténgase al día!.',
-                pathImage: 'assets/asocoldro-logo.png',
+                pathImage: 'assets/drogascalidad.png',
                 ancho: 300,
               ),
               _Form(),
@@ -69,7 +69,7 @@ class __FormState extends State<_Form> {
           ),
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                primary: Color.fromARGB(255, 24, 196, 235), // background
+                primary: Color.fromARGB(255, 206, 30, 29), // background
                 onPrimary: Colors.white, // foreground
                 shape: StadiumBorder()),
             onPressed: authService.autenticando
@@ -117,7 +117,7 @@ class _Labels extends StatelessWidget {
       child: Column(
         children: const <Widget>[
           Text(
-            'Asocoldro @ 2022',
+            'Drogas Calidad @ 2022',
             style: TextStyle(fontWeight: FontWeight.w300),
           )
         ],
