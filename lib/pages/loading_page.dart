@@ -1,7 +1,7 @@
 // ignore_for_file: use_build_context_synchronously
 import 'package:flutter/material.dart';
+import 'package:maps_app/pages/alistamiento_page.dart';
 import 'package:provider/provider.dart';
-import 'package:maps_app/pages/home.dart';
 import 'package:maps_app/pages/login_page.dart';
 import 'package:maps_app/services/auth_services.dart';
 
@@ -28,7 +28,7 @@ class LoadingPage extends StatelessWidget {
       Navigator.pushReplacement(
           context,
           PageRouteBuilder(
-              pageBuilder: (_, __, ___) => HomePage(),
+              pageBuilder: (_, __, ___) => AlistamientoPage(),
               transitionDuration: Duration(milliseconds: 0)));
     } else {
       // ignore: use_build_context_synchronously

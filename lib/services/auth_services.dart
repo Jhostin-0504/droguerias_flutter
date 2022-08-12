@@ -1,6 +1,8 @@
 import 'dart:collection';
+import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:http/io_client.dart';
 import 'dart:convert';
 import 'package:maps_app/global/environment.dart';
 import 'package:maps_app/models/solicitud.dart';
@@ -31,14 +33,31 @@ class AuthService with ChangeNotifier {
   }
 
   Future<bool> login(String login, String password) async {
-    this.autenticando = true;
     final data = {
-      'name': login,
-      'pass': password,
+      'username': login,
+      'password': password,
     };
-    String url = '${Environment.apiUrl}/user/login?_format=json';
-    /*Map<String, String> headers = new HashMap();
-    headers.putIfAbsent('Accept', () => 'application/json');*/
+    String url = '${Environment.apiUrl}/login_check';
+    /*final ioc = new HttpClient();
+    ioc.badCertificateCallback =
+        (X509Certificate cert, String host, int port) => true;
+    final http2 = new IOClient(ioc);
+    http.Response response = await http2.post(
+      Uri.parse(url),
+      body: jsonEncode(data),
+      headers: {'Content-Type': 'application/json'},
+    );
+    this.autenticando = false;
+    if (response.statusCode == 200) {
+      final tokenResponse = tokenFromJson(response.body);
+      await this._guardarToken(tokenResponse.token);
+      final tokenToJsonResp = tokenToJson(tokenResponse);
+      //print(tokenResponse.success.token);
+
+      return true;
+    } else {
+      return false;
+    }*/
     http.Response response = await http.post(
       Uri.parse(url),
       body: jsonEncode(data),
@@ -47,8 +66,6 @@ class AuthService with ChangeNotifier {
     this.autenticando = false;
     if (response.statusCode == 200) {
       final tokenResponse = tokenFromJson(response.body);
-      final tokenToJsonResp = tokenToJson(tokenResponse);
-      //print(tokenResponse.success.token);
       await this._guardarToken(tokenResponse.token);
       return true;
     } else {
@@ -131,13 +148,12 @@ class AuthService with ChangeNotifier {
     await _storage.delete(key: 'token');
   }
 
-  Future<String> getSolicitudes(int userId) async {
-    // print("Solicitud");
+  Future<String> getAlistamientoForm() async {
     final token = await _storage.read(key: 'token');
-    String url = '${Environment.apiUrl}solubitacoraapi/solicitudes/${userId}';
+    String url = '${Environment.apiUrl}/alistamiento_diario/preguntas';
     Map<String, String> headers = new HashMap();
     headers.putIfAbsent('Accept', () => 'application/json');
-    headers.putIfAbsent('DOLAPIKEY', () => '${token}');
+    headers.putIfAbsent('Authorization', () => 'Bearer ${token}');
     http.Response response = await http.get(
       Uri.parse(url),
       headers: headers,

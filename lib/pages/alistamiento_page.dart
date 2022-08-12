@@ -1,36 +1,45 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:maps_app/helpers/alert.dart';
-import 'package:maps_app/pages/alistamiento_page.dart';
 import 'package:maps_app/services/auth_services.dart';
 import 'package:maps_app/widgets/logo.dart';
-import 'package:maps_app/widgets/custom_input.dart';
+import 'package:provider/provider.dart';
 
-class LoginPage extends StatelessWidget {
+import '../widgets/custom_input.dart';
+
+class AlistamientoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      body: FutureBuilder(
+        future: getPreguntasAlistamiento(context),
+        builder: (context, snapshot) {
+          return Center(
+            child: Text('Cargando...'),
+          );
+        },
+      ),
+    );
+    /*return Scaffold(
+      
       backgroundColor: Color(0xffF2F2F2),
       body: SafeArea(
-          child: SingleChildScrollView(
+        
+        child: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
         child: Container(
           height: MediaQuery.of(context).size.height * 0.9,
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: <Widget>[
-              const Logo(
-                label: 'Seguridad y Economia',
-                pathImage: 'assets/drogascalidad.png',
-                ancho: 300,
-              ),
-              _Form(),
-              _Labels()
-            ],
+            children: <Widget>[_Form(), _Labels()],
           ),
         ),
       )),
-    );
+    );*/
+  }
+
+  Future getPreguntasAlistamiento(BuildContext context) async {
+    final dataService = Provider.of<AuthService>(context);
+    String fotoUsuario = await dataService.getAlistamientoForm();
   }
 }
 

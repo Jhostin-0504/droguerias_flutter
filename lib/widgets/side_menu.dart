@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:provider/provider.dart';
 import 'package:maps_app/helpers/dialog_confirm.dart';
-import 'package:maps_app/pages/home.dart';
 import 'package:maps_app/pages/login_page.dart';
 
 class SideMenu extends StatelessWidget {
