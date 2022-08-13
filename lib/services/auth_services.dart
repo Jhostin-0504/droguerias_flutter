@@ -150,16 +150,29 @@ class AuthService with ChangeNotifier {
 
   Future<String> getAlistamientoForm() async {
     final token = await _storage.read(key: 'token');
+    //final headers = {'Authorization': 'Bearer ${token}'};
     String url = '${Environment.apiUrl}/alistamiento_diario/preguntas';
+    /*final request = http.Request('GET', Uri.parse(url));
+    request.headers.addAll(headers);
+    http.StreamedResponse response = await request.send();
+    */
+
+    /*
+    http.Response response = await http.get(Uri.parse(url), headers: {
+      'Content-Type': 'application/x-www-form-urlencoded',
+      'Authorization': 'Bearer $token'
+    });*/
+
     Map<String, String> headers = new HashMap();
     headers.putIfAbsent('Accept', () => 'application/json');
-    headers.putIfAbsent('Authorization', () => 'Bearer ${token}');
+    headers.putIfAbsent('Authorization', () => '${token}');
     http.Response response = await http.get(
       Uri.parse(url),
       headers: headers,
     );
     if (response.statusCode == 200) {
       //final solicitud = solicitudFromJson(response.body);
+      //final resp = await response.stream.bytesToString();
       return response.body;
     } else {
       return "";
