@@ -1,20 +1,18 @@
 import 'dart:collection';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:http/io_client.dart';
 import 'dart:convert';
 import 'package:maps_app/global/environment.dart';
 import 'package:maps_app/models/solicitud.dart';
 import 'package:maps_app/models/token.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:maps_app/models/usuario.dart';
 
 class AuthService with ChangeNotifier {
   final _storage = new FlutterSecureStorage();
   String photoUser = '';
   bool _autenticando = false;
   bool get autenticando => this._autenticando;
+  final List<Solicitud> solicitudes = [];
   set autenticando(bool valor) {
     this._autenticando = valor;
     notifyListeners();
@@ -148,7 +146,7 @@ class AuthService with ChangeNotifier {
     await _storage.delete(key: 'token');
   }
 
-  Future<String> getAlistamientoForm() async {
+  Future<List<Solicitud>> getAlistamientoForm() async {
     final token = await _storage.read(key: 'token');
     //final headers = {'Authorization': 'Bearer ${token}'};
     String url = '${Environment.apiUrl}/alistamiento_diario/preguntas';
@@ -165,17 +163,25 @@ class AuthService with ChangeNotifier {
 
     Map<String, String> headers = new HashMap();
     headers.putIfAbsent('Accept', () => 'application/json');
-    headers.putIfAbsent('Authorization', () => '${token}');
+    headers.putIfAbsent('Authorization', () => 'Bearer ${token}');
     http.Response response = await http.get(
       Uri.parse(url),
       headers: headers,
     );
     if (response.statusCode == 200) {
-      //final solicitud = solicitudFromJson(response.body);
+      final solicitudesMap = solicitudFromJson(response.body);
+      /*solicitudesMap.forEach((key, value) {
+        this.solicitudes.add(value);
+      });*/
+      return this.solicitudes;
+/*
+
+      return solicitudFromJson(response.body);
+      //return preguntas;
       //final resp = await response.stream.bytesToString();
-      return response.body;
+      return response.body;*/
     } else {
-      return "";
+      return [];
     }
   }
 }

@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:maps_app/helpers/alert.dart';
+import 'package:maps_app/models/perguntas.dart';
+import 'package:maps_app/models/solicitud.dart';
 import 'package:maps_app/services/auth_services.dart';
 import 'package:maps_app/widgets/logo.dart';
 import 'package:provider/provider.dart';
 
+import '../services/alistamiento_services.dart';
 import '../widgets/custom_input.dart';
 
 class AlistamientoPage extends StatelessWidget {
@@ -14,7 +17,15 @@ class AlistamientoPage extends StatelessWidget {
         future: getPreguntasAlistamiento(context),
         builder: (context, snapshot) {
           return Center(
-            child: Text('Cargando...'),
+            child: Column(
+              children: <Widget>[
+                Image(image: AssetImage('assets/cargando.gif')),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Construyendo...'),
+              ],
+            ),
           );
         },
       ),
@@ -38,8 +49,13 @@ class AlistamientoPage extends StatelessWidget {
   }
 
   Future getPreguntasAlistamiento(BuildContext context) async {
-    final dataService = Provider.of<AuthService>(context);
-    String fotoUsuario = await dataService.getAlistamientoForm();
+    final dataService = Provider.of<AlistamientoServices>(context);
+    List<Preguntas> data = await dataService.loadAlistamiento();
+    /*var DataSource =
+        SolicitudesDataSource(solicitudes: dataService.loadAlistamiento);*/
+
+    //List<Solicitud> preguntasAlistamiento = await dataService.getAlistamientoForm();
+    //final preguntas = solicitudFromJson(response.body);
   }
 }
 
@@ -133,4 +149,40 @@ class _Labels extends StatelessWidget {
       ),
     );
   }
+}
+
+class SolicitudesDataSource {
+  SolicitudesDataSource({required String solicitudes}) {
+    /* _solicitudes = solicitudes
+        .map<DataGridRow>((e) => DataGridRow(cells: [
+              DataGridCell<String>(columnName: 'ref', value: e.ref),
+              DataGridCell<DateTime>(
+                  columnName: 'fecha', value: e.dateCreation),
+              DataGridCell<String>(
+                  columnName: 'razonSocial', value: e.razonSocial),
+              DataGridCell<String>(columnName: 'asunto', value: e.asunto),
+              DataGridCell<String>(columnName: 'detalle', value: e.detalle),
+            ]))
+        .toList();*/
+  }
+
+  /* List<DataGridRow> _solicitudes = [];
+
+  @override
+  List<DataGridRow> get rows => _solicitudes;
+
+  @override
+  DataGridRowAdapter? buildRow(DataGridRow row) {
+    return DataGridRowAdapter(
+        cells: row.getCells().map<Widget>((dataGridCell) {
+      return Container(
+        /*alignment: (dataGridCell.columnName == 'ref' ||
+                dataGridCell.columnName == 'salary')
+            ? Alignment.centerRight
+            : Alignment.centerLeft,*/
+        padding: EdgeInsets.all(1.0),
+        child: Text(dataGridCell.value.toString()),
+      );
+    }).toList());
+  }*/
 }

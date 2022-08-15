@@ -5,6 +5,7 @@ import 'package:maps_app/screen/screens.dart';
 import 'package:maps_app/blocs/blocs.dart';
 import 'package:maps_app/routes/routes.dart';
 import 'package:maps_app/services/auth_services.dart';
+import 'package:maps_app/services/alistamiento_services.dart';
 
 void main() {
   //runApp(const MapsApp());
@@ -27,7 +28,7 @@ class MapsApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(create: (_) => AuthService()),
-        //ChangeNotifierProvider(create: (_) => SolicitudesServices())
+        ChangeNotifierProvider(create: (_) => AlistamientoServices())
       ],
       child: MaterialApp(
         theme: ThemeData(

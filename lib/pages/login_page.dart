@@ -108,6 +108,21 @@ class __FormState extends State<_Form> {
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    final updatedText = "71750170";
+    usuarioCtrl.value = usuarioCtrl.value.copyWith(
+      text: updatedText,
+      selection: TextSelection.collapsed(offset: updatedText.length),
+    );
+    final passwoddDefaul = "Admin123";
+    passwordCtrl.value = passwordCtrl.value.copyWith(
+      text: passwoddDefaul,
+      selection: TextSelection.collapsed(offset: passwoddDefaul.length),
+    );
+  }
 }
 
 class _Labels extends StatelessWidget {
@@ -117,7 +132,7 @@ class _Labels extends StatelessWidget {
       child: Column(
         children: const <Widget>[
           Text(
-            'Drogas Calidad @ 2022',
+            'Drogas Calidad @2022',
             style: TextStyle(fontWeight: FontWeight.w300),
           )
         ],

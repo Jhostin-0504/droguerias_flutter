@@ -13,7 +13,15 @@ class LoadingPage extends StatelessWidget {
         future: checkLoginState(context),
         builder: (context, snapshot) {
           return Center(
-            child: Text('Cargando...'),
+            child: Column(
+              children: <Widget>[
+                Image(image: AssetImage('assets/cargando.gif')),
+                const SizedBox(
+                  height: 10,
+                ),
+                Text('Cargando...w'),
+              ],
+            ),
           );
         },
       ),
