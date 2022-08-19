@@ -17,9 +17,10 @@ class AlistamientoServices extends ChangeNotifier {
     loadAlistamiento();
     print(alistamiento);
   }
+  //Future<List<Pregunta>> _preguntas;
 
   Future<List<Preguntas>> loadAlistamiento() async {
-    List<Preguntas> pintl = [];
+    //   List<Preguntas> pintl = [];
     isLoading = true;
     //  notifyListeners();
     final token = await getToken();
@@ -34,7 +35,7 @@ class AlistamientoServices extends ChangeNotifier {
     if (response.statusCode == 200) {
       final pregunts = json.decode(response.body);
 
-      for (var item in pregunts[Pregunta]) {
+      for (var item in pregunts[Preguntas]) {
         pregunts.add(Pregunta(
           opcionesRespuesta: item["id"],
           id: item["id"],
