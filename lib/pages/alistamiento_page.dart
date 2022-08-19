@@ -11,6 +11,8 @@ import '../services/alistamiento_services.dart';
 import '../widgets/custom_input.dart';
 
 class AlistamientoPage extends StatelessWidget {
+  const AlistamientoPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,6 +31,7 @@ class AlistamientoPage extends StatelessWidget {
   Future getPreguntasAlistamiento(BuildContext context) async {
     final dataService = Provider.of<AlistamientoServices>(context);
     List<Preguntas> data = await dataService.loadAlistamiento();
+    print(data);
 
     /*var DataSource =
         SolicitudesDataSource(solicitudes: dataService.loadAlistamiento);*/
@@ -53,7 +56,9 @@ class _ListaPreguntas extends StatelessWidget {
           title: const Text("Preguntas Alistamiento"),
         ),
         body: ListView.builder(
+          itemCount: usuarios.length,
           itemBuilder: (context, index) {
+            final Usuario = usuarios[index];
             return Card(
               child: Padding(
                 padding: const EdgeInsets.only(
@@ -83,7 +88,7 @@ class _ListaPreguntas extends StatelessWidget {
                           "Habilitar Slider",
                         ),
                         value: _sliderEnable,
-                        onChanged: (value) => setState(() {
+                        onChanged: (value) => (() {
                               _sliderEnable = value ?? true;
                             })),
                   ],
@@ -91,16 +96,6 @@ class _ListaPreguntas extends StatelessWidget {
               ),
             );
           },
-          itemCount: usuarios.length,
         ));
   }
-  /* Widget build(BuildContext context) {
-    return ListView.builder(
-      itemCount: usuarios.length,
-      itemBuilder: (BuildContext context, i) {
-        final Usuario = usuarios[i];
-        return ListTile();
-      },
-    );
-  }*/
 }

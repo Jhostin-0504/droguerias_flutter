@@ -10,6 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class AlistamientoServices extends ChangeNotifier {
   final String _baseURL = '${Environment.apiUrl}';
   final List<Preguntas> alistamiento = [];
+
   bool isLoading = true;
 
   AlistamientoServices() {
@@ -18,6 +19,7 @@ class AlistamientoServices extends ChangeNotifier {
   }
 
   Future<List<Preguntas>> loadAlistamiento() async {
+    List<Preguntas> pintl = [];
     isLoading = true;
     //  notifyListeners();
     final token = await getToken();
@@ -31,7 +33,18 @@ class AlistamientoServices extends ChangeNotifier {
     );
     if (response.statusCode == 200) {
       final pregunts = json.decode(response.body);
-      pregunts.forEach((key, value) {
+
+      for (var item in pregunts[Pregunta]) {
+        pregunts.add(Pregunta(
+          opcionesRespuesta: item["id"],
+          id: item["id"],
+          orden: item[1],
+          pregunta: item["pregunta"],
+          tipoRespuesta: item[0],
+        ));
+      }
+      return pregunts;
+      /*pregunts.forEach((key, value) {
         alistamiento.add(pregunts);
 
         //      print(key);
@@ -39,11 +52,12 @@ class AlistamientoServices extends ChangeNotifier {
       isLoading = false;
       //    notifyListeners();
       //return this.alistamiento;
-      return pregunts;
+      return pregunts;*/
     } else {
-      this.isLoading = false;
-      //    notifyListeners();
-      return [];
+      throw Exception("la conexioon fallo");
+      /*isLoading = false;
+      // notifyListeners();
+      return [];*/
     }
   }
 
