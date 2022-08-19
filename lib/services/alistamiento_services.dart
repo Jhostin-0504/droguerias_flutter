@@ -1,3 +1,4 @@
+import 'dart:async';
 import 'dart:collection';
 import 'dart:convert';
 import 'package:flutter/material.dart';
@@ -10,16 +11,18 @@ class AlistamientoServices extends ChangeNotifier {
   final String _baseURL = '${Environment.apiUrl}';
   final List<Preguntas> alistamiento = [];
   bool isLoading = true;
+
   AlistamientoServices() {
-    this.loadAlistamiento();
+    loadAlistamiento();
     print(alistamiento);
   }
+
   Future<List<Preguntas>> loadAlistamiento() async {
-    this.isLoading = true;
-    notifyListeners();
+    isLoading = true;
+    //  notifyListeners();
     final token = await getToken();
     String url = '${Environment.apiUrl}/alistamiento_diario/preguntas';
-    Map<String, String> headers = new HashMap();
+    Map<String, String> headers = HashMap();
     headers.putIfAbsent('Accept', () => 'application/json');
     headers.putIfAbsent('Authorization', () => 'Bearer ${token}');
     http.Response response = await http.get(
@@ -27,18 +30,19 @@ class AlistamientoServices extends ChangeNotifier {
       headers: headers,
     );
     if (response.statusCode == 200) {
-      final preguntasMap = json.decode(response.body);
-      preguntasMap.forEach((key, value) {
-        this.alistamiento.add(value);
-        print(key);
+      final pregunts = json.decode(response.body);
+      pregunts.forEach((key, value) {
+        alistamiento.add(pregunts);
+
+        //      print(key);
       });
-      this.isLoading = false;
-      notifyListeners();
+      isLoading = false;
+      //    notifyListeners();
       //return this.alistamiento;
-      return preguntasMap;
+      return pregunts;
     } else {
       this.isLoading = false;
-      notifyListeners();
+      //    notifyListeners();
       return [];
     }
   }
